@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		  <meta charset="utf-8">
+
+		    <title>The HTML5 Herald</title>
+			  <meta name="description" content="The HTML5 Herald">
+			    <meta name="author" content="SitePoint">
+
+				  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+	</head>
+	<%
+		console.log(stockData);
+	%>
+	<body>
+		<h1> <%= title %></h1>
+			<div style="display: flex;"> 
+				<%
+		const intervals = stockData['Time Series (1min)'];
+		let stockTimes = [];
+				%>	
+					<% 
+						Object.keys(intervals).forEach((time) => {
+							stockTimes.push({
+								date: new Date(time),
+								actual: time
+							});												
+						}); 
+						stockTimes.sort((a,b) => a.date - b.date);
+						stockTimes.forEach(time => {
+							let stats = intervals[time.actual]['4. close'];
+							let stockTime = time.date.toGMTString();
+						%>
+					<div style="width: 10px; background: blue; height: <%= `${stats % 100}px` %>">
+						</div>
+
+						<%
+							});
+						%>
+			</div>
+	</body>
+		<script>
+			window.stockData = <%= JSON.stringify(stockData) %>;
+		</script>
+</html>
